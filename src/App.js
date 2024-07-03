@@ -48,7 +48,9 @@ function App() {
         
         <MovieDetails movie={selectedMovie} updateMovie={loadMovie} />
 
-        <MovieForm movie={editMovie} />
+        { editMovie  ? <MovieForm movie={editMovie} /> : null }
+
+        
           
        
       </div>
