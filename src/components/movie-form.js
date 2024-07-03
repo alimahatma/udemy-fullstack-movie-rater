@@ -16,11 +16,11 @@ function MovieForm(props) {
                 <div>
                     {/* <h2>{props.movie && props.movie.title}</h2> */}
 
-                    <label for='title'>Title</label><br />
+                    <label htmlFor='title'>Title</label><br />
                     <input id='title' type='text' placeholder='title' value={title} 
                         onChange={ evt => setTitle(evt.target.value)} /><br/>
                     
-                    <label for='title'>Description</label><br />
+                    <label htmlFor='title'>Description</label><br />
                     <textarea id='description' type='text' placeholder='Description' value={description} 
                         onChange={ evt => setDescription(evt.target.value)}></textarea><br />
                    
