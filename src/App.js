@@ -36,6 +36,26 @@ function App() {
     setSelectedMovie(null);
   }
 
+  const updateMovie = movie => {
+    const newMovies = movies.map( mov => {
+      if (mov.id === movie.id) {
+        return movie;
+      }
+      return mov;
+    })
+    setMovies(newMovies);
+  }
+
+  const newMovie = () => {
+    setEditMovie({title: '', description: ''});
+    setSelectedMovie(null);
+  }
+
+  const movieCreated = movie => {
+    const newMovies =[...movies, movie];
+    setMovies(newMovies);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -43,15 +63,14 @@ function App() {
       </header>
 
       <div className='layout'> 
-        
-        <MovieList movies={movies} movieClicked={loadMovie} editClicked={ editClicked } />
-        
+        <div> 
+          <MovieList movies={movies} movieClicked={loadMovie} editClicked={ editClicked } />
+          <button onClick={ newMovie }>Creat New movie</button>
+        </div>
+
         <MovieDetails movie={selectedMovie} updateMovie={loadMovie} />
-
-        { editMovie  ? <MovieForm movie={editMovie} /> : null }
-
-        
-          
+        { editMovie  ? 
+          <MovieForm movie={editMovie} updateMovie={updateMovie} movieCreated={movieCreated} /> : null }
        
       </div>
 

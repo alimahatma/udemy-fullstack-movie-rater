@@ -39,8 +39,6 @@ function MovieDetails(props) {
         .catch( error => console.log(error))
     }
 
-
-
     return (
 
         <React.Fragment>
