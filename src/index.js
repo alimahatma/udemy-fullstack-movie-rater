@@ -1,31 +1,27 @@
-import React, { useState, createContext } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import Auth from './components/auth';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-export const TokenContext = createContext(null);
-
 function Router() {
 
-  const [token, setToken] = useState('');
-
   return (
-    <TokenContext.Provider value={{token, setToken}}>
-      <React.StrictMode>
+    <React.StrictMode>
+      <CookiesProvider>
         <BrowserRouter>
           <Routes>
             <Route exact path='/' Component={Auth} />
             <Route exact path='/movies' Component={App} />
           </Routes>
         </BrowserRouter>
-      </React.StrictMode>
-    </TokenContext.Provider>
-
+      </CookiesProvider>
+    </React.StrictMode>
   )
 
 }
