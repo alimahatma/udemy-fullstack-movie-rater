@@ -4,7 +4,7 @@ import {API} from '../api-service';
 function MovieForm(props) {
 
     const [title, setTitle] = useState(props.movie.title);
-    const [description, setDescription]  = useState(props.movie.description);
+    const [description, setDescription]  = useState('');
 
     useEffect( () => {
         setTitle(props.movie.title);
