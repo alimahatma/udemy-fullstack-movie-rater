@@ -3,28 +3,39 @@ import './App.css';
 import MovieList from './components/movie-list';
 import MovieDetails from './components/movie-details';
 import MovieForm from './components/movie-form';
+import { useCookies } from 'react-cookie';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilm } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [editMovie, setEditMovie] = useState(null);
 
+  //!Refatoring dynamic token
+  const [token, , removeToken] = useCookies(['mr-token']);
+
+
   useEffect(()=> {
     fetch("http://127.0.0.1:8000/api/movies/", {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Token 4e10a5822145ebc55cdf800741f0479b10a16d1c'
+        'Authorization': `Token ${token['mr-token']}`
       }
     })
     .then(resp => resp.json())
     .then(resp => setMovies(resp))
     .catch(error => console.log(error))
-  }, [])
+  }, [token])
 
-  // const movieClicked = movie => {
-  //   setSelectedMovie(movie);
-  // }
+  useEffect( () => {
+    if(!token['mr-token'] || token['mr-token'] === 'undefined' ){
+      window.location.href = '/';
+    } 
+      
+  }, [token])
 
   const loadMovie = movie => {
     setSelectedMovie(movie);
@@ -61,10 +72,16 @@ function App() {
     setMovies(newMovies);
   }
 
+  const handleLogout = () => {
+    removeToken('mr-token'); // Menghapus token dari cookies
+    window.location.href = '/'; // Mengarahkan ke halaman login
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Movie Rater</h1>
+        <h1><FontAwesomeIcon icon={faFilm} /> Movie Rater</h1>
+        <FontAwesomeIcon icon={faSignOutAlt} onClick={handleLogout} />
       </header>
 
       <div className='layout'> 
